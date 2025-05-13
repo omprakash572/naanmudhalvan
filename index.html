@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Home Energy Optimization</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-home"></i> Smart Home Energy Dashboard</h1>
+            <nav>
+                <button class="nav-btn active" data-section="dashboard">Dashboard</button>
+                <button class="nav-btn" data-section="analytics">Analytics</button>
+                <button class="nav-btn" data-section="settings">Settings</button>
+                <a href="monthly-bills.html" class="nav-btn bills-btn"><i class="fas fa-file-invoice-dollar"></i> Monthly Bills</a>
+            </nav>
+        </header>
+
+        <main>
+            <section id="dashboard" class="active-section">
+                <div class="energy-stats">
+                    <div class="stat-card">
+                        <i class="fas fa-bolt"></i>
+                        <h3>Current Usage</h3>
+                        <p class="value">2.4 kWh</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-solar-panel"></i>
+                        <h3>Solar Generation</h3>
+                        <p class="value">1.8 kWh</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-temperature-high"></i>
+                        <h3>Temperature</h3>
+                        <p class="value">22°C</p>
+                    </div>
+                </div>
+
+                <div class="device-controls">
+                    <h2>Smart Devices</h2>
+                    <div class="device-grid">
+                        <div class="device-card">
+                            <i class="fas fa-lightbulb"></i>
+                            <h3>Living Room Lights</h3>
+                            <label class="switch">
+                                <input type="checkbox" checked>
+                                <span class="slider"></span>
+                            </label>
+                            <div class="device-status">
+                                <span class="status-dot online"></span>
+                                <span class="power-usage">45W</span>
+                            </div>
+                        </div>
+                        <div class="device-card">
+                            <i class="fas fa-wind"></i>
+                            <h3>AC Unit</h3>
+                            <label class="switch">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <div class="device-status">
+                                <span class="status-dot offline"></span>
+                                <span class="power-usage">0W</span>
+                            </div>
+                        </div>
+                        <div class="device-card">
+                            <i class="fas fa-tv"></i>
+                            <h3>Smart TV</h3>
+                            <label class="switch">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <div class="device-status">
+                                <span class="status-dot offline"></span>
+                                <span class="power-usage">0W</span>
+                            </div>
+                        </div>
+                        <div class="device-card">
+                            <i class="fas fa-thermometer-half"></i>
+                            <h3>Smart Thermostat</h3>
+                            <div class="temperature-control">
+                                <button class="temp-btn" onclick="adjustTemp(-1)">-</button>
+                                <span class="temp-value">22°C</span>
+                                <button class="temp-btn" onclick="adjustTemp(1)">+</button>
+                            </div>
+                        </div>
+                        <div class="device-card">
+                            <i class="fas fa-door-closed"></i>
+                            <h3>Smart Door Lock</h3>
+                            <label class="switch">
+                                <input type="checkbox" checked>
+                                <span class="slider"></span>
+                            </label>
+                            <div class="device-status">
+                                <span class="status-dot online"></span>
+                                <span class="lock-status">Locked</span>
+                            </div>
+                        </div>
+                        <div class="device-card">
+                            <i class="fas fa-camera"></i>
+                            <h3>Security Camera</h3>
+                            <label class="switch">
+                                <input type="checkbox" checked>
+                                <span class="slider"></span>
+                            </label>
+                            <div class="device-status">
+                                <span class="status-dot online"></span>
+                                <span class="camera-status">Active</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="energy-insights">
+                    <h2>Energy Insights</h2>
+                    <div class="insights-grid">
+                        <div class="insight-card">
+                            <i class="fas fa-chart-line"></i>
+                            <h3>Daily Savings</h3>
+                            <p class="value">$2.50</p>
+                            <p class="trend positive">↑ 15% from yesterday</p>
+                        </div>
+                        <div class="insight-card">
+                            <i class="fas fa-leaf"></i>
+                            <h3>Carbon Footprint</h3>
+                            <p class="value">2.1 kg</p>
+                            <p class="trend negative">↓ 8% from yesterday</p>
+                        </div>
+                        <div class="insight-card">
+                            <i class="fas fa-clock"></i>
+                            <h3>Peak Hours</h3>
+                            <p class="value">18:00 - 21:00</p>
+                            <p class="trend neutral">Same as yesterday</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="analytics" class="hidden">
+                <h2>Energy Analytics</h2>
+                
+                <!-- Time Range Selector -->
+                <div class="time-range-selector">
+                    <button class="time-btn active" data-range="day">Day</button>
+                    <button class="time-btn" data-range="week">Week</button>
+                    <button class="time-btn" data-range="month">Month</button>
+                    <button class="time-btn" data-range="year">Year</button>
+                </div>
+
+                <!-- Quick Stats -->
+                <div class="quick-stats">
+                    <div class="stat-item">
+                        <i class="fas fa-bolt"></i>
+                        <div class="stat-info">
+                            <h4>Total Energy Used</h4>
+                            <p class="stat-value" id="totalEnergy">0 kWh</p>
+                            <p class="stat-trend positive">↑ 5% vs last period</p>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-dollar-sign"></i>
+                        <div class="stat-info">
+                            <h4>Total Cost</h4>
+                            <p class="stat-value" id="totalCost">$0.00</p>
+                            <p class="stat-trend negative">↑ 3% vs last period</p>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-leaf"></i>
+                        <div class="stat-info">
+                            <h4>Carbon Footprint</h4>
+                            <p class="stat-value" id="carbonFootprint">0 kg</p>
+                            <p class="stat-trend positive">↓ 8% vs last period</p>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-solar-panel"></i>
+                        <div class="stat-info">
+                            <h4>Solar Generation</h4>
+                            <p class="stat-value" id="solarGeneration">0 kWh</p>
+                            <p class="stat-trend positive">↑ 12% vs last period</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Energy Usage Chart -->
+                <div class="chart-container">
+                    <canvas id="energyChart"></canvas>
+                </div>
+
+                <!-- Detailed Analytics Grid -->
+                <div class="analytics-grid">
+                    <!-- Energy Distribution -->
+                    <div class="analytics-card">
+                        <h3>Energy Distribution</h3>
+                        <canvas id="distributionChart"></canvas>
+                    </div>
+
+                    <!-- Cost Analysis -->
+                    <div class="analytics-card">
+                        <h3>Cost Analysis</h3>
+                        <canvas id="costChart"></canvas>
+                    </div>
+
+                    <!-- Peak Hours -->
+                    <div class="analytics-card">
+                        <h3>Peak Hours Analysis</h3>
+                        <canvas id="peakHoursChart"></canvas>
+                    </div>
+
+                    <!-- Energy Efficiency -->
+                    <div class="analytics-card">
+                        <h3>Energy Efficiency Score</h3>
+                        <div class="efficiency-score">
+                            <div class="score-circle">
+                                <span id="efficiencyScore">85</span>
+                                <span class="score-label">/100</span>
+                            </div>
+                            <div class="score-details">
+                                <p class="score-trend positive">↑ 5% from last month</p>
+                                <p class="score-description">Good energy efficiency</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Advanced Analytics -->
+                <div class="advanced-analytics">
+                    <h3>Advanced Analytics</h3>
+                    <div class="advanced-grid">
+                        <!-- Device Usage Analysis -->
+                        <div class="advanced-card">
+                            <h4>Device Usage Analysis</h4>
+                            <canvas id="deviceUsageChart"></canvas>
+                            <div class="device-stats">
+                                <div class="device-stat">
+                                    <span class="device-name">AC Unit</span>
+                                    <div class="progress-bar">
+                                        <div class="progress" style="width: 75%"></div>
+                                    </div>
+                                    <span class="device-value">75%</span>
+                                </div>
+                                <div class="device-stat">
+                                    <span class="device-name">Lighting</span>
+                                    <div class="progress-bar">
+                                        <div class="progress" style="width: 45%"></div>
+                                    </div>
+                                    <span class="device-value">45%</span>
+                                </div>
+                                <div class="device-stat">
+                                    <span class="device-name">Appliances</span>
+                                    <div class="progress-bar">
+                                        <div class="progress" style="width: 60%"></div>
+                                    </div>
+                                    <span class="device-value">60%</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Cost Breakdown -->
+                        <div class="advanced-card">
+                            <h4>Cost Breakdown</h4>
+                            <canvas id="costBreakdownChart"></canvas>
+                            <div class="cost-breakdown">
+                                <div class="cost-item">
+                                    <span class="cost-category">Base Rate</span>
+                                    <span class="cost-amount">$45.00</span>
+                                </div>
+                                <div class="cost-item">
+                                    <span class="cost-category">Peak Hours</span>
+                                    <span class="cost-amount">$25.50</span>
+                                </div>
+                                <div class="cost-item">
+                                    <span class="cost-category">Taxes & Fees</span>
+                                    <span class="cost-amount">$15.00</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Energy Savings -->
+                        <div class="advanced-card">
+                            <h4>Energy Savings</h4>
+                            <div class="savings-metrics">
+                                <div class="savings-metric">
+                                    <span class="metric-label">Daily Savings</span>
+                                    <span class="metric-value">$2.50</span>
+                                    <span class="metric-trend positive">↑ 15%</span>
+                                </div>
+                                <div class="savings-metric">
+                                    <span class="metric-label">Monthly Savings</span>
+                                    <span class="metric-value">$75.00</span>
+                                    <span class="metric-trend positive">↑ 12%</span>
+                                </div>
+                                <div class="savings-metric">
+                                    <span class="metric-label">Yearly Savings</span>
+                                    <span class="metric-value">$900.00</span>
+                                    <span class="metric-trend positive">↑ 8%</span>
+                                </div>
+                            </div>
+                            <canvas id="savingsChart"></canvas>
+                        </div>
+
+                        <!-- Environmental Impact -->
+                        <div class="advanced-card">
+                            <h4>Environmental Impact</h4>
+                            <div class="environmental-metrics">
+                                <div class="env-metric">
+                                    <i class="fas fa-tree"></i>
+                                    <span class="env-value">12</span>
+                                    <span class="env-label">Trees Saved</span>
+                                </div>
+                                <div class="env-metric">
+                                    <i class="fas fa-car"></i>
+                                    <span class="env-value">450</span>
+                                    <span class="env-label">Miles Driven</span>
+                                </div>
+                                <div class="env-metric">
+                                    <i class="fas fa-home"></i>
+                                    <span class="env-value">3</span>
+                                    <span class="env-label">Homes Powered</span>
+                                </div>
+                            </div>
+                            <canvas id="environmentalChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detailed Insights -->
+                <div class="insights-section">
+                    <h3>Detailed Insights</h3>
+                    <div class="insights-grid">
+                        <div class="insight-card">
+                            <i class="fas fa-bolt"></i>
+                            <h4>Energy Usage Patterns</h4>
+                            <ul class="insight-list">
+                                <li>Highest usage: 6 PM - 9 PM</li>
+                                <li>Lowest usage: 2 AM - 5 AM</li>
+                                <li>Average daily usage: 24.5 kWh</li>
+                            </ul>
+                        </div>
+                        <div class="insight-card">
+                            <i class="fas fa-dollar-sign"></i>
+                            <h4>Cost Analysis</h4>
+                            <ul class="insight-list">
+                                <li>Daily average: $3.25</li>
+                                <li>Monthly projection: $97.50</li>
+                                <li>Year-to-date: $876.50</li>
+                            </ul>
+                        </div>
+                        <div class="insight-card">
+                            <i class="fas fa-leaf"></i>
+                            <h4>Environmental Impact</h4>
+                            <ul class="insight-list">
+                                <li>Carbon footprint: 2.1 kg/day</li>
+                                <li>Energy saved: 15% vs last month</li>
+                                <li>Green energy: 30% of total usage</li>
+                            </ul>
+                        </div>
+                        <div class="insight-card">
+                            <i class="fas fa-lightbulb"></i>
+                            <h4>Optimization Tips</h4>
+                            <ul class="insight-list">
+                                <li>Shift heavy usage to off-peak hours</li>
+                                <li>Consider solar panel installation</li>
+                                <li>Upgrade to energy-efficient appliances</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bills-section">
+                    <h2>Energy Bills</h2>
+                    <div class="bills-tabs">
+                        <button class="tab-btn active" data-tab="monthly">Monthly</button>
+                        <button class="tab-btn" data-tab="yearly">Yearly</button>
+                    </div>
+                    
+                    <div class="bills-content">
+                        <div id="monthly-bills" class="tab-content active">
+                            <div class="bill-summary">
+                                <div class="bill-card">
+                                    <h3>Current Month</h3>
+                                    <p class="amount">$85.50</p>
+                                    <p class="trend positive">↓ 12% from last month</p>
+                                </div>
+                                <div class="bill-card">
+                                    <h3>Average Daily Cost</h3>
+                                    <p class="amount">$2.85</p>
+                                    <p class="trend neutral">Same as last month</p>
+                                </div>
+                                <div class="bill-card">
+                                    <h3>Peak Day Cost</h3>
+                                    <p class="amount">$4.20</p>
+                                    <p class="date">March 15, 2024</p>
+                                </div>
+                            </div>
+                            <div class="monthly-chart-container">
+                                <canvas id="monthlyBillsChart"></canvas>
+                            </div>
+                        </div>
+                        
+                        <div id="yearly-bills" class="tab-content">
+                            <div class="bill-summary">
+                                <div class="bill-card">
+                                    <h3>Year to Date</h3>
+                                    <p class="amount">$256.50</p>
+                                    <p class="trend positive">↓ 8% from last year</p>
+                                </div>
+                                <div class="bill-card">
+                                    <h3>Average Monthly Cost</h3>
+                                    <p class="amount">$85.50</p>
+                                    <p class="trend negative">↑ 5% from last year</p>
+                                </div>
+                                <div class="bill-card">
+                                    <h3>Highest Month</h3>
+                                    <p class="amount">$95.20</p>
+                                    <p class="date">January 2024</p>
+                                </div>
+                            </div>
+                            <div class="yearly-chart-container">
+                                <canvas id="yearlyBillsChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="settings" class="hidden">
+                <h2>Settings</h2>
+                <div class="settings-grid">
+                    <div class="setting-card">
+                        <h3>Energy Saving Mode</h3>
+                        <label class="switch">
+                            <input type="checkbox">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-card">
+                        <h3>Auto Schedule</h3>
+                        <label class="switch">
+                            <input type="checkbox" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <div class="chat-container">
+            <div class="chat-header">
+                <h3><i class="fas fa-robot"></i> Energy Assistant</h3>
+                <button id="minimize-chat"><i class="fas fa-minus"></i></button>
+            </div>
+            <div class="chat-messages" id="chat-messages">
+                <div class="message bot">
+                    Hello! I'm your energy assistant. How can I help you optimize your home's energy usage today?
+                </div>
+            </div>
+            <div class="chat-input">
+                <input type="text" id="user-input" placeholder="Ask about energy optimization...">
+                <button id="send-message"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+</html> 

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monthly Energy Bills</title>
+    <link rel="stylesheet" href="monthly-bills.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="bills-container">
+        <header>
+            <h1><i class="fas fa-file-invoice-dollar"></i> Monthly Energy Bills</h1>
+            <div class="month-selector">
+                <select id="monthSelect" class="month-select">
+                    <option value="0">January</option>
+                    <option value="1">February</option>
+                    <option value="2">March</option>
+                    <option value="3">April</option>
+                    <option value="4">May</option>
+                    <option value="5">June</option>
+                    <option value="6">July</option>
+                    <option value="7">August</option>
+                    <option value="8">September</option>
+                    <option value="9">October</option>
+                    <option value="10">November</option>
+                    <option value="11">December</option>
+                </select>
+            </div>
+        </header>
+        <main>
+            <section class="bill-summary">
+                <div class="bill-card">
+                    <h3>Current Month</h3>
+                    <p class="amount" id="currentMonthAmount">$0.00</p>
+                    <p class="trend" id="currentMonthTrend"></p>
+                </div>
+                <div class="bill-card">
+                    <h3>Average Daily Cost</h3>
+                    <p class="amount" id="avgDailyAmount">$0.00</p>
+                    <p class="trend" id="avgDailyTrend"></p>
+                </div>
+                <div class="bill-card">
+                    <h3>Peak Day Cost</h3>
+                    <p class="amount" id="peakDayAmount">$0.00</p>
+                    <p class="date" id="peakDayDate"></p>
+                </div>
+            </section>
+            <section class="monthly-chart-section">
+                <canvas id="monthlyBillsChart"></canvas>
+            </section>
+        </main>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="monthly-bills.js"></script>
+</body>
+</html> 
