@@ -1,0 +1,72 @@
+#define BLYNK_TEMPLATE_ID "TMPL34AaItkhc"
+#define BLYNK_TEMPLATE_NAME "smart home automation"
+#define BLYNK_AUTH_TOKEN "iFCEMDmjUm_SL5ddYTdbXXul5yy-TtOe"
+
+#include <WiFi.h>
+#include <BlynkSimpleEsp32.h>
+
+// Your WiFi credentials
+char ssid[] = "Omprakash";
+char pass[] = "12345678";
+
+// Relay pin definitions
+#define RELAY1_PIN 2
+#define RELAY2_PIN 4
+
+void setup() {
+  // Initialize serial communication
+  Serial.begin(115200);
+  
+  // Initialize relay pins as outputs
+  pinMode(RELAY1_PIN, OUTPUT);
+  pinMode(RELAY2_PIN, OUTPUT);
+  
+  // Initialize relays to OFF state (HIGH = OFF for most relay modules)
+  digitalWrite(RELAY1_PIN, HIGH);
+  digitalWrite(RELAY2_PIN, HIGH);
+  
+  // Initialize Blynk
+  Blynk.begin(BLYNK_AUTH_TOKEN, ssid, pass);
+  
+  Serial.println("ESP32 Smart Home System Started");
+  Serial.println("Connecting to Blynk...");
+}
+
+void loop() {
+  Blynk.run();
+}
+
+// Virtual pin V1 - Controls Relay 1
+BLYNK_WRITE(V1) {
+  int relayState = param.asInt();
+  
+  if (relayState == 1) {
+    digitalWrite(RELAY1_PIN, LOW);  // Turn relay ON
+    Serial.println("Relay 1 ON");
+  } else {
+    digitalWrite(RELAY1_PIN, HIGH); // Turn relay OFF
+    Serial.println("Relay 1 OFF");
+  }
+}
+
+// Virtual pin V2 - Controls Relay 2
+BLYNK_WRITE(V2) {
+  int relayState = param.asInt();
+  
+  if (relayState == 1) {
+    digitalWrite(RELAY2_PIN, LOW);  // Turn relay ON
+    Serial.println("Relay 2 ON");
+  } else {
+    digitalWrite(RELAY2_PIN, HIGH); // Turn relay OFF
+    Serial.println("Relay 2 OFF");
+  }
+}
+
+// Send status when connected to Blynk
+BLYNK_CONNECTED() {
+  Serial.println("Connected to Blynk!");
+  
+  // Sync virtual pins with current relay states
+  Blynk.syncVirtual(V1);
+  Blynk.syncVirtual(V2);
+}
